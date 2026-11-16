@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Cartilla de agudeza visual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<main id="principal">
+  <section class="bienvenida" data-paso="0">
+    <svg class="logo" viewBox="0 0 100 100" role="img" aria-label="Logotipo de la cartilla de agudeza visual"><path class="lg-e" d="M36 12H64V40H36ZM30 50H46V66H30ZM54 50H70V66H54Z"/><path class="lg-anillo" d="M29 78H38V87H29ZM45.5 78H54.5V87H45.5ZM62 78H71V87H62Z"/></svg>
+    <h1 class="marca-nombre">Cartilla de agudeza visual</h1>
+    <p class="lema">Agudeza visual lejana y cercana con optotipos a tamaño real, calculados para su pantalla y su distancia de evaluación.</p>
+    <button type="button" class="btn-portada" id="comenzar">Comenzar</button>
+    <p class="autor">Lic. Opt. César Fernández Lima<br>
+      <a class="ig" href="https://www.instagram.com/meibolab/" target="_blank" rel="noopener">Sígueme en Instagram: <strong>@meibolab</strong></a></p>
+  </section>
+
+  <header class="cabecera" id="cabecera">
+    <div class="identidad">
+      <svg class="logo" viewBox="0 0 100 100" role="img" aria-label="Logotipo de la cartilla de agudeza visual"><path class="lg-e" d="M36 12H64V40H36ZM30 50H46V66H30ZM54 50H70V66H54Z"/><path class="lg-anillo" d="M29 78H38V87H29ZM45.5 78H54.5V87H45.5ZM62 78H71V87H62Z"/></svg>
+      <div>
+        <h1>Cartilla de agudeza visual</h1>
+        <p class="sub">Lic. Opt. César Fernández Lima</p>
+      </div>
+    </div>
+    <span id="pildora" class="pildora mal">Sin calibrar</span>
+  </header>
+
+  <ol class="ruta" id="ruta">
+    <li><button type="button" data-ir="1"><span class="num">1</span><span class="tx">Calibrar</span></button></li>
+    <li><button type="button" data-ir="2"><span class="num">2</span><span class="tx">Distancia</span></button></li>
+    <li><button type="button" data-ir="3"><span class="num">3</span><span class="tx">Optotipos</span></button></li>
+    <li><button type="button" data-ir="4"><span class="num">4</span><span class="tx">Cartilla</span></button></li>
+  </ol>
+
+  <section class="paso" data-paso="1">
+    <h2 id="cal-titulo">Calibre la pantalla</h2>
+    <div id="cal-listo" class="bloque" hidden>
+      <p class="guia" id="cal-listo-tx"></p>
+      <div class="dos-botones">
+        <button type="button" class="btn" id="cal-rehacer">Volver a calibrar</button>
+        <button type="button" class="btn pri" id="cal-continuar">Continuar</button>
+      </div>
+    </div>
+    <p class="guia" id="cal-intro">Así la página sabe cuánto mide un milímetro en esta pantalla. Solo hace falta una vez por dispositivo: la calibración queda guardada.</p>
+    <div id="cal-estado" class="estado"></div>
+
+    <div id="cal-panel">
+      <div class="seg" id="cal-metodos">
+        <button type="button" data-m="pantalla" class="on">Sin objeto</button>
+        <button type="button" data-m="tarjeta">Con una tarjeta</button>
+        <button type="button" data-m="manual">Con otra referencia</button>
+      </div>
+      <p class="guia" id="cal-instr"></p>
+      <div id="campo-pantalla" class="bloque">
+        <label>Su equipo
+          <select id="sel-equipo"></select>
+        </label>
+        <label id="campo-diag" hidden>Tamaño de la pantalla (pulgadas, en diagonal)
+          <input type="number" id="in-diag" inputmode="decimal" min="3" max="120" step="0.01" placeholder="p. ej. 6.5">
+        </label>
+        <p class="nota" id="diag-info"></p>
+      </div>
+      <div class="linea-campos" id="campo-manual" hidden>
+        <label>Ancho del objeto (mm)
+          <input type="number" id="in-ref-w" inputmode="decimal" min="5" step="0.1" value="50">
+        </label>
+        <label>Alto del objeto (mm)
+          <input type="number" id="in-ref-h" inputmode="decimal" min="5" step="0.1" value="50">
+        </label>
+      </div>
+      <div id="cal-arrastre" class="bloque">
+      <div class="cal-zona"><div id="cal-figura"><div id="cal-rect" class="tarjeta"></div><button type="button" id="cal-asa" aria-label="Arrastre para cambiar el ancho y el alto">⤡</button></div></div>
+      <div class="ajustes" id="ajustes">
+        <div class="aj"><span>Ancho</span><button type="button" data-aj="w" data-d="-1" aria-label="Reducir ancho">−</button><button type="button" data-aj="w" data-d="1" aria-label="Aumentar ancho">+</button></div>
+        <div class="aj"><span>Alto</span><button type="button" data-aj="h" data-d="-1" aria-label="Reducir alto">−</button><button type="button" data-aj="h" data-d="1" aria-label="Aumentar alto">+</button></div>
+      </div>
+      </div>
+      <div class="fila-acc">
+        <span class="mono tenue" id="cal-valor"></span>
+        <button type="button" class="btn pri" id="cal-guardar">Guardar calibración</button>
+      </div>
+    </div>
+    <details id="cal-detalles">
+      <summary>Datos del dispositivo</summary>
+      <dl class="datos" id="dispositivo"></dl>
+      <p class="nota">Los informa el navegador y no se usan para calcular tamaños; el tamaño real sale solo de la calibración.</p>
+    </details>
+  </section>
+
+  <section class="paso" data-paso="2" hidden>
+    <h2>¿Qué va a medir y a qué distancia?</h2>
+    <div class="seg" id="vision-seg">
+      <button type="button" data-v="lejos" class="on">Visión lejana</button>
+      <button type="button" data-v="cerca">Visión cercana</button>
+    </div>
+    <div id="bloque-lejos" class="bloque">
+      <div class="chips" id="dist-chips"></div>
+      <label class="casilla"><input type="checkbox" id="chk-otra"> Usar otra distancia</label>
+      <div class="linea-campos" id="campos-otra" hidden>
+        <label>Distancia
+          <input type="number" id="in-dist" inputmode="decimal" min="0" step="0.01" placeholder="p. ej. 2.5">
+        </label>
+        <label>Unidad
+          <select id="sel-unidad"><option value="m">metros</option><option value="cm">centímetros</option></select>
+        </label>
+        <button type="button" class="btn" id="dist-aplicar">Usar</button>
+      </div>
+    </div>
+    <p class="guia destacado" id="bloque-cerca" hidden><strong>La visión cercana se evalúa a 30 cm.</strong> Coloque la pantalla a 30 cm de los ojos del paciente.</p>
+    <p class="guia" id="dist-resumen"></p>
+    <p class="nota">Mida con cinta la distancia real entre el paciente y la pantalla: la página no puede medirla.</p>
+  </section>
+
+  <section class="paso" data-paso="3" hidden>
+    <h2>Elija los optotipos</h2>
+    <div class="opciones" id="conj-op">
+      <button type="button" data-c="letras"><span class="mu" id="mu-letras"></span><b>Letras</b><small>Para quien conoce el alfabeto</small></button>
+      <button type="button" data-c="e"><span class="mu" id="mu-e"></span><b>E direccional</b><small>El paciente señala hacia dónde apunta</small></button>
+    </div>
+    <div class="linea-campos">
+      <label>Notación
+        <select id="sel-notacion"><option value="20">20/x</option><option value="6">6/x</option><option value="dec">Decimal</option></select>
+      </label>
+      <label>Cómo mostrarla
+        <select id="sel-modo"><option value="completa">Cartilla completa</option><option value="linea">Una línea a la vez</option><option value="optotipo">Un optotipo a la vez</option></select>
+      </label>
+    </div>
+  </section>
+
+  <section class="paso" data-paso="4" hidden>
+    <h2>Todo listo</h2>
+    <dl class="resumen" id="resumen"></dl>
+    <p class="guia" id="aviso-lineas" hidden></p>
+    <p class="guia destacado"><strong>Antes de empezar:</strong> suba el brillo de la pantalla al máximo, apague el modo nocturno o el filtro de luz azul (Night Shift, True Tone) y evite reflejos sobre la pantalla.</p>
+    <button type="button" class="btn pri grande" id="iniciar">Mostrar cartilla</button>
+    <details>
+      <summary>Tamaño de cada línea</summary>
+      <div class="tabla-env"><table id="tabla"></table></div>
+      <p class="nota">Las líneas que no caben se desplazan; nunca se reducen.</p>
+    </details>
+  </section>
+
+  <div class="pie-nav" id="pie-nav">
+    <button type="button" class="btn" id="atras">Atrás</button>
+    <span class="nota" id="nav-nota"></span>
+    <button type="button" class="btn pri" id="siguiente">Siguiente</button>
+  </div>
+
+  <footer id="pie">
+    <p class="aviso"><strong>Uso profesional.</strong> Una pantalla digital no equivale automáticamente a una cartilla clínica certificada. Se requiere validación metrológica y clínica antes de usarla en decisiones diagnósticas.</p>
+    <details>
+      <summary>Pruebas de verificación</summary>
+      <p class="nota">Comprueban el tamaño físico, la conversión mm–px, las equivalencias de notación, el efecto de la distancia, la orientación y la calibración en dispositivos simulados.</p>
+      <div class="fila-acc"><span class="mono" id="pr-resumen"></span><button type="button" class="btn" id="pr-ejecutar">Ejecutar pruebas</button></div>
+      <ul id="pr-lista" class="pruebas"></ul>
+    </details>
+    <p class="nota">Lic. Opt. César Fernández Lima · Instagram <a class="enlace" href="https://www.instagram.com/meibolab/" target="_blank" rel="noopener">@meibolab</a></p>
+    <p class="nota"><span id="guardado"></span> <button type="button" class="enlace" id="borrar">Borrar datos guardados</button></p>
+  </footer>
+</main>
+
+<div id="eval" hidden>
+  <div class="barra" id="barra-arriba">
+    <div class="seg mini" id="ev-prueba"><button type="button" data-p="agudeza">Agudeza</button><button type="button" data-p="bicro">Bicromática</button><button type="button" data-p="reloj">Reloj</button></div>
+    <span class="hueco"></span>
+    <button type="button" class="bt" id="ev-ocultar-ctrl">Ocultar</button>
+    <button type="button" class="bt fuerte" id="ev-fin">Salir</button>
+  </div>
+  <div id="lienzo"><div id="hoja"></div></div>
+  <div class="barra abajo" id="barra-abajo">
+    <div class="nav">
+      <button type="button" class="bt cuad" id="ev-ant" aria-label="Línea anterior">▲</button>
+      <span class="mono" id="ev-etq"></span>
+      <button type="button" class="bt cuad" id="ev-sig" aria-label="Línea siguiente">▼</button>
+    </div>
+    <div class="seg mini" id="ev-modo"><button type="button" data-m="completa">Cartilla</button><button type="button" data-m="linea">Línea</button><button type="button" data-m="optotipo">Optotipo</button></div>
+    <span class="fino" id="ev-fino" hidden>Trazo muy fino para esta pantalla</span>
+    <span class="hueco"></span>
+    <button type="button" class="bt" id="ev-azar">Aleatorizar</button>
+    <button type="button" class="bt" id="ev-inferiores">Ocultar inferiores</button>
+    <button type="button" class="bt" id="ev-pc">Pantalla completa</button>
+  </div>
+  <button type="button" id="ev-mostrar" hidden aria-label="Mostrar controles">•••</button>
+  <div id="ev-alerta" hidden></div>
+</div>
+
+<script src="js/geometria.js"></script>
+<script src="js/optotipos.js"></script>
+<script src="js/cartillas.js"></script>
+<script src="js/equipos.js"></script>
+<script src="js/pruebas.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
